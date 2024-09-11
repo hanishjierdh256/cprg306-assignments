@@ -3,7 +3,7 @@ export default function Page(){
 
   return(
     <>
-    <header>WEB DEVELOPMENT 2 ASSIGNMENTS</header>
+    <header><h1>CPRG 306: Web Development 2 - Assignments</h1></header>
     <main>
       <ul>
         <li><Link href="/week-2">Assignment 2</Link></li>
