@@ -4,17 +4,41 @@ import { useState } from "react";
 export default function NewItem() {
     const [name, setName] = useState("");
     const [quantity, setQuantity] = useState(1);
-    let [isActiveDecrement, setIsActiveDecrement] = useState(false);
-    let [isActiveIncrement, setIsActiveIncrement] = useState(true);
+    const [isActiveDecrement, setIsActiveDecrement] = useState(false);
+    const [isActiveIncrement, setIsActiveIncrement] = useState(true);
     const [category, setCategory] = useState("Produce");
 
     const handleNameChange = (event) => {
-        let name;
+        setName(event.target.value);
+    };
+
+    const increment = () => {
+        if (quantity < 20) {
+            setQuantity(quantity + 1);
+            setIsActiveDecrement(true);
+        }
+        if (quantity == 19) {
+            setIsActiveIncrement(false);
+        }
+    };
+
+    const decrement = () => {
+        if (quantity > 1) {
+            setQuantity(quantity - 1);
+            setIsActiveIncrement(true);
+        }
+        if (quantity == 2) {
+            setIsActiveDecrement(false);
+        }
+    };
+
+    const handleCategoryChange = (event) => {
+        setCategory(event.target.value);
     };
 
     const handleSubmit = (event) => {
-        event.PreventDefault();
-        item = { name, category, quantity };
+        event.preventDefault();
+        const item = { name, category, quantity };
         console.log(item);
         alert(
             `You added ${quantity} ${name}${quantity > 1 ? "s" : ""
@@ -26,41 +50,23 @@ export default function NewItem() {
         setQuantity(1);
         setIsActiveDecrement(false);
         setIsActiveIncrement(true);
-        setCategory("produce");
+        setCategory("Produce");
     };
 
-    let increment = () => {
-        if (quantity < 20) {
-            setQuantity(quantity + 1);
-            setIsActiveDecrement(true);
-        }
-        if (quantity == 19) {
-            setIsActiveIncrement(false);
-        }
-    };
-
-    let decrement = () => {
-        if (quantity > 1) {
-            setQuantity(quantity - 1);
-            setIsActiveIncrement(true);
-        }
-        if (quantity == 2) {
-            setIsActiveDecrement(false);
-        }
-    };
     return (
         <form
-            onSubmit={handleSubmit}
-            className="flex flex-col w-1/4 min-w-fit mx-auto my-4 p-4 bg-gray-200 rounded-lg shadow-lg"
+            onSubmit={(event) => handleSubmit(event)}
+            className="flex flex-col w-1/4 min-w-96 mx-auto my-4 p-4 bg-gray-200 rounded-lg shadow-lg"
         >
             {/* Name */}
             <input
+                id="itemName"
                 type="text"
                 value={name}
                 onChange={(event) => handleNameChange(event)}
                 placeholder="Item name"
                 className="p-2 my-2 border border-gray-400 rounded"
-                required="required"
+                required
             />
             {/* Name END*/}
 
@@ -69,7 +75,8 @@ export default function NewItem() {
                 <p className="flex-1 my-auto mx-3">{quantity}</p>
                 <div className="my-auto mx-2 grid grid-cols-2 gap-2">
                     <button
-                        //id="decrementButton"
+                        id="decrementButton"
+                        type="button"
                         onClick={decrement}
                         className={` ${isActiveDecrement
                             ? "bg-blue-500 hover:bg-blue-700"
@@ -79,7 +86,8 @@ export default function NewItem() {
                         -
                     </button>
                     <button
-                        //id="incrementButton"
+                        id="incrementButton"
+                        type="button"
                         onClick={increment}
                         className={` ${isActiveIncrement
                             ? "bg-blue-500 hover:bg-blue-700"
@@ -93,13 +101,31 @@ export default function NewItem() {
             {/* Quantity  with + and - buttons END*/}
 
             {/* Category */}
-                <select
-                    
-                />
+            <select
+                id="itemCategory"
+                value={category}
+                onChange={(event) => handleCategoryChange(event)}
+            >
+                <option value="Produce">Produce</option>
+                <option value="Dairy">Dairy</option>
+                <option value="Bakery">Bakery</option>
+                <option value="Meat">Meat</option>
+                <option value="Frozen Foods">Frozen Foods</option>
+                <option value="Canned Goods">Canned Goods</option>
+                <option value="Dry Goods">Dry Goods</option>
+                <option value="Beverages">Beverages</option>
+                <option value="Snacks">Snacks</option>
+                <option value="Household">Household</option>
+                <option value="Other">Other</option>
+            </select>
             {/* Category END */}
 
             {/* Add Button */}
-
+            <input
+                type="submit"
+                value="+"
+                className="p-2 my-2 bg-blue-500 hover:bg-blue-700 text-white font-bold rounded"
+            />
             {/* Add Button END*/}
         </form>
     );
