@@ -17,6 +17,9 @@ export default function NewItem() {
             setQuantity(quantity + 1);
             setIsActiveDecrement(true);
         }
+        else {
+            alert("Quantity cannot be more than 20");
+        }
         if (quantity == 19) {
             setIsActiveIncrement(false);
         }
@@ -26,6 +29,9 @@ export default function NewItem() {
         if (quantity > 1) {
             setQuantity(quantity - 1);
             setIsActiveIncrement(true);
+        }
+        else {
+            alert("Quantity cannot be less than 1");
         }
         if (quantity == 2) {
             setIsActiveDecrement(false);
